@@ -7,6 +7,7 @@ class RandomNumberView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     bool isLoading = ref.watch(randomNumberViewController);
+    int number = ref.watch(randomNumber);
     var viewController = ref.watch(randomNumberViewController.notifier);
 
     return Scaffold(
@@ -19,7 +20,7 @@ class RandomNumberView extends ConsumerWidget {
           Center(
               child: isLoading
                   ? CircularProgressIndicator()
-                  : Text("Random Number : ${ref.watch(randomNumber)}"))
+                  : Text("Random Number : $number"))
         ],
       ),
       floatingActionButton: FloatingActionButton(

@@ -11,7 +11,7 @@ class RandomNumberController {
   RandomNumberController(this._read);
 
   Future<void> getRandomNumber() async {
-    int number = await _read(numberService).call();
+    int number = await _read(numberService).getRandomNumber();
     _read(randomNumber.notifier).setCount(number);
   }
 }
