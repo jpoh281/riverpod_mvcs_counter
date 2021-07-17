@@ -8,7 +8,7 @@ final numberService = Provider<NumberService>((ref) {
 
 class NumberService {
   Future<int> call() async {
-    // Fake a service call, and return some posts
+    // Fake a service call, and return random number
     await Future.delayed(Duration(seconds: 1));
     return Random().nextInt(999);
   }
