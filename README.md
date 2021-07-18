@@ -28,7 +28,7 @@ final numberService = Provider<NumberService>((ref) {
 });
 
 class NumberService {
-  Future<int> call() async {
+  Future<int> getRandomNumber() async {
     // Fake a service call, and return random number
     await Future.delayed(Duration(seconds: 1));
     return Random().nextInt(999);
@@ -51,7 +51,7 @@ class RandomNumberController {
   RandomNumberController(this._read);
 
   Future<void> getRandomNumber() async {
-    int number = await _read(numberService).call();
+    int number = await _read(numberService).getRandomNumber();
     _read(randomNumber.notifier).setCount(number);
   }
 }
