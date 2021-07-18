@@ -69,7 +69,7 @@ class RandomNumberView extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     bool isLoading = ref.watch(randomNumberViewController);
     var viewController =     ref.watch(randomNumberViewController.notifier);
-
+    int number = ref.watch(randomNumber);
     return Scaffold(
       appBar: AppBar(
         title: Text("Riverpod MVC + S"),
