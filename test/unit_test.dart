@@ -1,9 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:riverpod_mvcs_counter/controllers/random_number_controller.dart';
-
-import 'package:riverpod_mvcs_counter/main.dart';
 import 'package:riverpod_mvcs_counter/models/random_number.dart';
 import 'package:riverpod_mvcs_counter/services/random_number_service.dart';
 import 'package:riverpod_mvcs_counter/views/random_number/random_number_view_controller.dart';
