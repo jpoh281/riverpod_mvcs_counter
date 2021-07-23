@@ -19,17 +19,17 @@ class RandomNumberView extends ConsumerWidget {
         children: [
           Center(
               child: isLoading
-                  ? CircularProgressIndicator()
+                  ? const CircularProgressIndicator()
                   : Text("Random Number : $number"))
         ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => isLoading ? null : viewController.getRandomNumber(),
         child: isLoading
-            ? CircularProgressIndicator(
+            ? const CircularProgressIndicator(
                 color: Colors.white,
               )
-            : Icon(Icons.add),
+            : const Icon(Icons.add),
       ),
     );
   }
