@@ -1,9 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final randomNumber = StateNotifierProvider<RandomNumber, int>((ref) => RandomNumber());
+final randomNumberModel = StateNotifierProvider<RandomNumberModel, int>((ref) => RandomNumberModel());
 
-class RandomNumber extends StateNotifier<int> {
-  RandomNumber() : super(0);
+class RandomNumberModel extends StateNotifier<int> {
+  RandomNumberModel() : super(0);
 
   setCount(int number){
     state = number;

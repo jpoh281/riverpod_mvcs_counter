@@ -10,8 +10,10 @@ class RandomNumberController {
 
   RandomNumberController(this._read);
 
-  Future<void> getRandomNumber() async {
-    int number = await _read(numberService).getRandomNumber();
-    _read(randomNumber.notifier).setCount(number);
+  Future<int> getRandomNumber() async {
+    int randomNumber = await _read(numberService).getRandomNumber();
+    _read(randomNumberModel.notifier).setCount(randomNumber);
+
+    return randomNumber;
   }
 }

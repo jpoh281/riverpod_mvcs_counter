@@ -1,16 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riverpod_mvcs_counter/models/app_model.dart';
+import 'package:riverpod_mvcs_counter/views/auth/auth_view.dart';
 import 'package:riverpod_mvcs_counter/views/random_number/random_number_view.dart';
 
 void main() {
   runApp(ProviderScope(child: MyApp()));
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends ConsumerWidget {
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+
+    String currentUser = ref.watch(appModel);
+
     return MaterialApp(
-      home: RandomNumberView(),
+      home: currentUser.isNotEmpty ? RandomNumberView() : AuthView(),
     );
   }
 }
