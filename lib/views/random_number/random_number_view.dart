@@ -14,6 +14,7 @@ class RandomNumberView extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
+        key: ValueKey('RandomNumberView Appbar'),
         title: Text("Hello, $currentUser"),
       ),
       body: Column(

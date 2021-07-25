@@ -11,7 +11,6 @@ import 'package:riverpod_mvcs_counter/views/random_number/random_number_view_con
 
 class FakeNumberService implements NumberService {
   Future<int> getRandomNumber() async {
-    // Fake a service call, and return random number
     await Future.delayed(Duration(seconds: 1));
     return 1;
   }

@@ -10,8 +10,12 @@ class AuthView extends ConsumerWidget {
     return Scaffold(
         body: Center(
             child: isLoading
-                ? CircularProgressIndicator()
+                ? CircularProgressIndicator(
+                    key: Key('loginLoading'),
+                  )
                 : TextButton(
-                    onPressed: viewController.login, child: Text("Login"))));
+                    onPressed: viewController.login,
+                    child: Text("Login",
+                      key: Key('loginButton'),))));
   }
 }

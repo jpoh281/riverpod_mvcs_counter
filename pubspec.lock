@@ -126,7 +126,7 @@ packages:
     source: sdk
     version: "0.0.0"
   flutter_driver:
-    dependency: "direct main"
+    dependency: transitive
     description: flutter
     source: sdk
     version: "0.0.0"
@@ -175,6 +175,11 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.0.0"
+  integration_test:
+    dependency: "direct dev"
+    description: flutter
+    source: sdk
+    version: "0.0.0"
   io:
     dependency: transitive
     description:
@@ -384,7 +389,7 @@ packages:
     source: hosted
     version: "1.2.0"
   test:
-    dependency: "direct main"
+    dependency: "direct dev"
     description:
       name: test
       url: "https://pub.dartlang.org"
