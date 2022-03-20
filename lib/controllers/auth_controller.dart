@@ -3,12 +3,12 @@ import 'package:riverpod_mvcs_counter/models/user.dart';
 import 'package:riverpod_mvcs_counter/services/auth_service.dart';
 
 final authController =
-    Provider<RandomNumberController>((ref) => RandomNumberController(ref.read));
+Provider<AuthController>((ref) => AuthController(ref.read));
 
-class RandomNumberController {
+class AuthController {
   final Reader _read;
 
-  RandomNumberController(this._read);
+  AuthController(this._read);
 
   Future<String> login() async {
     String currentUser = await _read(authService).login();
