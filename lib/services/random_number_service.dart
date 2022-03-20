@@ -10,6 +10,14 @@ class NumberService {
   Future<int> getRandomNumber() async {
     // Fake a service call, and return random number
     await Future.delayed(Duration(seconds: 1));
-    return Random().nextInt(999);
+    return _generateErrorOrRandomNumber();
+  }
+
+  _generateErrorOrRandomNumber() {
+    if (Random().nextBool()) {
+      return Random().nextInt(999);
+    } else {
+      throw Exception("Can't generate RandomNumber");
+    }
   }
 }
