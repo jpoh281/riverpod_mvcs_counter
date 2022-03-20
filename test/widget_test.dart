@@ -10,9 +10,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:riverpod_mvcs_counter/main.dart';
-import 'package:riverpod_mvcs_counter/models/app_model.dart';
+import 'package:riverpod_mvcs_counter/models/user.dart';
 import 'package:riverpod_mvcs_counter/services/random_number_service.dart';
 import 'package:riverpod_mvcs_counter/views/random_number/random_number_view.dart';
+
+const kDisableColor = Color.fromRGBO(0, 0, 0, 0.61);
 
 class FakeNumberService implements NumberService {
   Future<int> getRandomNumber() async {
@@ -22,16 +24,13 @@ class FakeNumberService implements NumberService {
   }
 }
 
+class FakeAppModel extends StateNotifier<AsyncValue<String>> implements User {
+  FakeAppModel() : super(AsyncData("jpoh4869"));
 
-
-class FakeAppModel extends StateNotifier<String> implements AppModel{
-  FakeAppModel():super("jpoh4869");
-
-  setCurrentUser(String currentUser){
-    state = currentUser;
+  setCurrentUser(String currentUser) {
+    state = AsyncData(currentUser);
   }
 }
-
 
 void main() {
   testWidgets('RandomNumberView(FloatingActionButton)',
@@ -55,9 +54,10 @@ void main() {
 
     // after Tab UI has Two CircularProgressIndicator
     await tester.pump();
-    expect(find.byType(CircularProgressIndicator), findsNWidgets(3));
-    expect(find.text('Random Number : 0'), findsNothing);
+    expect(find.text('Random Number : 0'), findsOneWidget);
     expect(find.text('Random Number : 1'), findsNothing);
+
+    _expectIsLoading(tester);
 
     // finish value is Rnadom Number : 1
     await tester.pump(Duration(seconds: 1));
@@ -66,59 +66,68 @@ void main() {
     expect(find.byType(CircularProgressIndicator), findsNothing);
   });
 
-  testWidgets('RandomNumberView(Logout)',
-          (WidgetTester tester) async {
-        // Build our app and trigger a frame.
-        await tester.pumpWidget(ProviderScope(
-          child: MyApp(),
-          overrides: [
-            numberService.overrideWithValue(FakeNumberService()),
-            appModel.overrideWithValue(FakeAppModel())
-          ],
-        ));
+  testWidgets('RandomNumberView(Logout)', (WidgetTester tester) async {
+    // Build our app and trigger a frame.
+    await tester.pumpWidget(ProviderScope(
+      child: MyApp(),
+      overrides: [
+        numberService.overrideWithValue(FakeNumberService()),
+        user.overrideWithValue(FakeAppModel())
+      ],
+    ));
 
-        // init value is Random Number : 0
-        expect(find.text('Hello, jpoh4869'), findsOneWidget);
-        expect(find.text('Random Number : 0'), findsOneWidget);
-        expect(find.byType(CircularProgressIndicator), findsNothing);
+    // init value is Random Number : 0
+    expect(find.text('Hello, jpoh4869'), findsOneWidget);
+    expect(find.text('Random Number : 0'), findsOneWidget);
+    expect(find.byType(CircularProgressIndicator), findsNothing);
 
-        await tester.tap(find.text('Logout'));
+    await tester.tap(find.text('Logout'));
 
-        // after Tab UI has Two CircularProgressIndicator
-        await tester.pump();
-        expect(find.byType(CircularProgressIndicator), findsNWidgets(3));
-        expect(find.text('Random Number : 0'), findsNothing);
-        expect(find.text('Random Number : 1'), findsNothing);
+    // after Tab UI has Two CircularProgressIndicator
+    await tester.pump();
+    expect(find.text('Random Number : 0'), findsOneWidget);
 
-        // finish value is Rnadom Number : 1
-        await tester.pump(Duration(seconds: 1));
-        expect(find.text("Login"),findsOneWidget);
-      });
+    _expectIsLoading(tester);
 
-  testWidgets('Auth View(Text Button)',
-          (WidgetTester tester) async {
-        // Build our app and trigger a frame.
-        await tester.pumpWidget(ProviderScope(
-          child: MyApp(),
-          overrides: [numberService.overrideWithValue(FakeNumberService())],
-        ));
+    // finish value is Rnadom Number : 1
+    await tester.pump(Duration(seconds: 1));
+    expect(find.text("Login"), findsOneWidget);
+  });
 
-        // init value is Random Number : 0
-        expect(find.text('Random Number : 0'), findsNothing);
-        expect(find.byType(CircularProgressIndicator), findsNothing);
-        expect(find.text("Login"),findsOneWidget);
+  testWidgets('Auth View(Text Button)', (WidgetTester tester) async {
+    // Build our app and trigger a frame.
+    await tester.pumpWidget(ProviderScope(
+      child: MyApp(),
+      overrides: [numberService.overrideWithValue(FakeNumberService())],
+    ));
 
-        await tester.tap(find.text("Login"));
+    // init value is Random Number : 0
+    expect(find.text('Random Number : 0'), findsNothing);
+    expect(find.byType(CircularProgressIndicator), findsNothing);
+    expect(find.text("Login"), findsOneWidget);
 
-        // after Tab UI has Two CircularProgressIndicator
-        await tester.pump();
-        expect(find.byType(CircularProgressIndicator), findsOneWidget);
-        expect(find.text("Login"),findsNothing);
-        // finish value is Rnadom Number : 1
+    await tester.tap(find.text("Login"));
 
-        await tester.pump(Duration(seconds: 1));
-        expect(find.text('Hello, jpoh4869'), findsOneWidget);
-        expect(find.text('Random Number : 0'), findsOneWidget);
-        expect(find.byType(CircularProgressIndicator), findsNothing);
-      });
+    // after Tab UI has Two CircularProgressIndicator
+    await tester.pump();
+    expect(find.byType(CircularProgressIndicator), findsOneWidget);
+    expect(find.text("Login"), findsNothing);
+    // finish value is Rnadom Number : 1
+
+    await tester.pump(Duration(seconds: 1));
+    expect(find.text('Hello, jpoh4869'), findsOneWidget);
+    expect(find.text('Random Number : 0'), findsOneWidget);
+    expect(find.byType(CircularProgressIndicator), findsNothing);
+  });
+}
+
+_expectIsLoading(WidgetTester tester){
+  final textButton =
+  tester.widget<TextButton>(find.widgetWithText(TextButton, "Logout"));
+  expect(textButton.onPressed, null);
+
+  final fabButton = tester.widget<FloatingActionButton>(
+      find.widgetWithIcon(FloatingActionButton, Icons.add));
+  expect(fabButton.onPressed, null);
+  expect(fabButton.backgroundColor, Color.fromRGBO(0, 0, 0, 0.61));
 }

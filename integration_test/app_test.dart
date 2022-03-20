@@ -40,7 +40,8 @@ void main() async {
 
     await tester.tap(find.byIcon(Icons.add));
     await tester.pump();
-    expect(find.byType(CircularProgressIndicator), findsNWidgets(3));
+
+    _expectIsLoading(tester);
 
     await tester.pumpAndSettle(Duration(seconds: 1));
     expect(find.text('Random Number : 0'), findsNothing);
@@ -48,9 +49,22 @@ void main() async {
 
     await tester.tap(find.text('Logout'));
     await tester.pump();
-    expect(find.byType(CircularProgressIndicator), findsNWidgets(3));
+
+    _expectIsLoading(tester);
 
     await tester.pumpAndSettle(Duration(seconds: 1));
     expect(find.text("Login"),findsOneWidget);
   });
+}
+
+
+_expectIsLoading(WidgetTester tester){
+  final textButton =
+  tester.widget<TextButton>(find.widgetWithText(TextButton, "Logout"));
+  expect(textButton.onPressed, null);
+
+  final fabButton = tester.widget<FloatingActionButton>(
+      find.widgetWithIcon(FloatingActionButton, Icons.add));
+  expect(fabButton.onPressed, null);
+  expect(fabButton.backgroundColor, Color.fromRGBO(0, 0, 0, 0.61));
 }

@@ -2,7 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:riverpod_mvcs_counter/controllers/auth_controller.dart';
 import 'package:riverpod_mvcs_counter/controllers/random_number_controller.dart';
-import 'package:riverpod_mvcs_counter/models/app_model.dart';
+import 'package:riverpod_mvcs_counter/models/user.dart';
 import 'package:riverpod_mvcs_counter/models/random_number.dart';
 import 'package:riverpod_mvcs_counter/services/auth_service.dart';
 import 'package:riverpod_mvcs_counter/services/random_number_service.dart';
@@ -19,11 +19,9 @@ class FakeNumberService implements NumberService {
 void main() {
   test('Random Number Model Test', () async{
     final container = ProviderContainer();
-    int model = container.read(randomNumberModel);
-    expect(model, 0);
+    expect(container.read(randomNumberModel), AsyncData(0));
     container.read(randomNumberModel.notifier).setCount(1);
-    model = container.read(randomNumberModel);
-    expect(model, 1);
+    expect(container.read(randomNumberModel), AsyncData(1));
   });
 
   test('Random Number Controller Test', () async{
@@ -32,9 +30,9 @@ void main() {
           numberService.overrideWithValue(FakeNumberService())
         ]
     );
-    expect(container.read(randomNumberModel), 0);
+    expect(container.read(randomNumberModel), AsyncData(0));
     expect(await container.read(randomNumberController).getRandomNumber(), 1);
-    expect(container.read(randomNumberModel), 1);
+    expect(container.read(randomNumberModel), AsyncData(1));
   });
 
   test('Number Service Test', () async{
@@ -67,21 +65,19 @@ void main() {
 
   test('App Model Test', () async{
     final container = ProviderContainer();
-    String currentUser = container.read(appModel);
-    expect(currentUser, '');
-    container.read(appModel.notifier).setCurrentUser("jpoh4869");
-    currentUser = container.read(appModel);
-    expect(currentUser, 'jpoh4869');
+    expect(container.read(user), AsyncData(''));
+    container.read(user.notifier).setCurrentUser("jpoh4869");
+    expect(container.read(user), AsyncData('jpoh4869'));
   });
 
 
   test('Auth Controller Test', () async{
     final container = ProviderContainer();
-    expect(container.read(appModel), '');
+    expect(container.read(user), AsyncData(''));
     expect(await container.read(authController).login(), 'jpoh4869');
-    expect(container.read(appModel), 'jpoh4869');
+    expect(container.read(user), AsyncData('jpoh4869'));
     expect(await container.read(authController).logout(), '');
-    expect(container.read(appModel), '');
+    expect(container.read(user), AsyncData(''));
   });
 
   test('Auth Service Test', () async{
