@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:riverpod_mvcs_counter/models/app_model.dart';
+import 'package:riverpod_mvcs_counter/models/user.dart';
 import 'package:riverpod_mvcs_counter/models/random_number.dart';
 import 'package:riverpod_mvcs_counter/views/random_number/random_number_view_controller.dart';
 
@@ -8,8 +8,9 @@ class RandomNumberView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     bool isLoading = ref.watch(randomNumberViewController);
-    int number = ref.watch(randomNumberModel);
-    String currentUser = ref.watch(appModel);
+    String currentUser = ref
+        .watch(user)
+        .when(data: (data) => data, error: (e, s) => "", loading: () => "");
     var viewController = ref.watch(randomNumberViewController.notifier);
 
     return Scaffold(
@@ -21,25 +22,19 @@ class RandomNumberView extends ConsumerWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Center(
-              child: isLoading
-                  ? const CircularProgressIndicator()
-                  : Text("Random Number : $number")),
+              child: ref.watch(randomNumberModel).when(
+                  data: (data) => Text("Random Number : $data"),
+                  error: (e, s) => Text("Error: $e"),
+                  loading: () => const CircularProgressIndicator())),
           TextButton(
-              onPressed: viewController.logout,
-              child: isLoading
-                  ? const CircularProgressIndicator(
-                      color: Colors.white,
-                    )
-                  : Text("Logout"))
+              onPressed: isLoading ? null : viewController.logout,
+              child: Text("Logout"))
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => isLoading ? null : viewController.getRandomNumber(),
-        child: isLoading
-            ? const CircularProgressIndicator(
-                color: Colors.white,
-              )
-            : const Icon(Icons.add),
+        onPressed: isLoading ? null : viewController.getRandomNumber,
+        backgroundColor: isLoading ? Color.fromRGBO(0, 0, 0, 0.61) : Colors.blue,
+        child: const Icon(Icons.add),
       ),
     );
   }
