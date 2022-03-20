@@ -121,9 +121,9 @@ void main() {
   });
 }
 
-_expectIsLoading(WidgetTester tester){
+_expectIsLoading(WidgetTester tester) {
   final textButton =
-  tester.widget<TextButton>(find.widgetWithText(TextButton, "Logout"));
+      tester.widget<TextButton>(find.widgetWithText(TextButton, "Logout"));
   expect(textButton.onPressed, null);
 
   final fabButton = tester.widget<FloatingActionButton>(

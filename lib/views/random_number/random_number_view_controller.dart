@@ -18,7 +18,7 @@ class RandomNumberViewController extends StateNotifier<bool> {
     state = false;
   }
 
-  logout() async{
+  logout() async {
     state = true;
     await _read(authController).logout();
     state = false;

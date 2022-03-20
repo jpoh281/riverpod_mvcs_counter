@@ -5,16 +5,13 @@ final authService = Provider<AuthService>((ref) {
 });
 
 class AuthService {
-
-  Future<String> login() async{
+  Future<String> login() async {
     await Future.delayed(Duration(seconds: 1));
     return 'jpoh4869';
   }
 
-  Future<String> logout() async{
+  Future<String> logout() async {
     await Future.delayed(Duration(seconds: 1));
     return '';
   }
 }
-
-

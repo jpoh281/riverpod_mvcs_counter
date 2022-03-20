@@ -15,7 +15,9 @@ class AuthView extends ConsumerWidget {
                   )
                 : TextButton(
                     onPressed: viewController.login,
-                    child: Text("Login",
-                      key: Key('loginButton'),))));
+                    child: Text(
+                      "Login",
+                      key: Key('loginButton'),
+                    ))));
   }
 }

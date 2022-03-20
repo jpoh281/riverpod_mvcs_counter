@@ -11,7 +11,6 @@ void main() {
 class MyApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-
     String currentUser = ref
         .watch(user)
         .when(data: (data) => data, error: (e, s) => "", loading: () => "");

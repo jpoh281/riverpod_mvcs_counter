@@ -2,7 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_mvcs_counter/controllers/auth_controller.dart';
 
 final authViewController =
-StateNotifierProvider<AuthViewController, bool>((ref) {
+    StateNotifierProvider<AuthViewController, bool>((ref) {
   return AuthViewController(ref.read);
 });
 

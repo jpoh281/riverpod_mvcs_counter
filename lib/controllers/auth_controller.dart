@@ -3,7 +3,7 @@ import 'package:riverpod_mvcs_counter/models/user.dart';
 import 'package:riverpod_mvcs_counter/services/auth_service.dart';
 
 final authController =
-Provider<RandomNumberController>((ref) => RandomNumberController(ref.read));
+    Provider<RandomNumberController>((ref) => RandomNumberController(ref.read));
 
 class RandomNumberController {
   final Reader _read;

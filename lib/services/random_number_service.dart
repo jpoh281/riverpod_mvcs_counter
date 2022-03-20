@@ -13,5 +13,3 @@ class NumberService {
     return Random().nextInt(999);
   }
 }
-
-

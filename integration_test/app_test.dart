@@ -26,7 +26,7 @@ void main() async {
     await tester.pumpAndSettle(); // Finish animations and scheduled microtasks
     await tester.pump(Duration(seconds: 2)); // Render another frame in 2s
 
-    expect(find.text("Login"),findsOneWidget);
+    expect(find.text("Login"), findsOneWidget);
 
     await tester.tap(find.text("Login"));
 
@@ -53,14 +53,13 @@ void main() async {
     _expectIsLoading(tester);
 
     await tester.pumpAndSettle(Duration(seconds: 1));
-    expect(find.text("Login"),findsOneWidget);
+    expect(find.text("Login"), findsOneWidget);
   });
 }
 
-
-_expectIsLoading(WidgetTester tester){
+_expectIsLoading(WidgetTester tester) {
   final textButton =
-  tester.widget<TextButton>(find.widgetWithText(TextButton, "Logout"));
+      tester.widget<TextButton>(find.widgetWithText(TextButton, "Logout"));
   expect(textButton.onPressed, null);
 
   final fabButton = tester.widget<FloatingActionButton>(

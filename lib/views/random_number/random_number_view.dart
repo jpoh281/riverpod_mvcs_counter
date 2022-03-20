@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:riverpod_mvcs_counter/models/user.dart';
 import 'package:riverpod_mvcs_counter/models/random_number.dart';
+import 'package:riverpod_mvcs_counter/models/user.dart';
 import 'package:riverpod_mvcs_counter/views/random_number/random_number_view_controller.dart';
 
 class RandomNumberView extends ConsumerWidget {
@@ -33,7 +33,8 @@ class RandomNumberView extends ConsumerWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: isLoading ? null : viewController.getRandomNumber,
-        backgroundColor: isLoading ? Color.fromRGBO(0, 0, 0, 0.61) : Colors.blue,
+        backgroundColor:
+            isLoading ? Color.fromRGBO(0, 0, 0, 0.61) : Colors.blue,
         child: const Icon(Icons.add),
       ),
     );
