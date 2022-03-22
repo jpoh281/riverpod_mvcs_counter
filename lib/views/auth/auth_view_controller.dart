@@ -9,9 +9,9 @@ final authViewController =
 class AuthViewController extends StateNotifier<bool> {
   AuthViewController(this._read) : super(false);
 
-  Reader _read;
+  final Reader _read;
 
-  login() async {
+  Future<void> login() async {
     state = true;
     await _read(authController).login();
     state = false;

@@ -5,6 +5,8 @@ import 'package:riverpod_mvcs_counter/models/user.dart';
 import 'package:riverpod_mvcs_counter/views/random_number/random_number_view_controller.dart';
 
 class RandomNumberView extends ConsumerWidget {
+  const RandomNumberView({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     bool isLoading = ref.watch(randomNumberViewController);
@@ -15,26 +17,29 @@ class RandomNumberView extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        key: ValueKey('RandomNumberView Appbar'),
+        key: const ValueKey('RandomNumberView Appbar'),
         title: Text("Hello, $currentUser"),
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Center(
-              child: ref.watch(randomNumberModel).when(
+            child: ref.watch(randomNumberModel).when(
                   data: (data) => Text("Random Number : $data"),
                   error: (e, s) => Text("Error: $e"),
-                  loading: () => const CircularProgressIndicator())),
+                  loading: () => const CircularProgressIndicator(),
+                ),
+          ),
           TextButton(
-              onPressed: isLoading ? null : viewController.logout,
-              child: Text("Logout"))
+            onPressed: isLoading ? null : viewController.logout,
+            child: const Text("Logout"),
+          ),
         ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: isLoading ? null : viewController.getRandomNumber,
         backgroundColor:
-            isLoading ? Color.fromRGBO(0, 0, 0, 0.61) : Colors.blue,
+            isLoading ? const Color.fromRGBO(0, 0, 0, 0.61) : Colors.blue,
         child: const Icon(Icons.add),
       ),
     );

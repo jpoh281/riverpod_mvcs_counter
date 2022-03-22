@@ -12,11 +12,11 @@ class RandomNumberController {
 
   Future<int> getRandomNumber() async {
     _read(randomNumberModel.notifier).setLoading();
-    try{
+    try {
       int randomNumber = await _read(numberService).getRandomNumber();
       _read(randomNumberModel.notifier).setCount(randomNumber);
       return randomNumber;
-    }catch(e,s){
+    } catch (e) {
       _read(randomNumberModel.notifier).setError(e as Exception);
       return -1;
     }

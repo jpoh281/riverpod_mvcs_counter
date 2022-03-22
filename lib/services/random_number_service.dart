@@ -9,11 +9,11 @@ final numberService = Provider<NumberService>((ref) {
 class NumberService {
   Future<int> getRandomNumber() async {
     // Fake a service call, and return random number
-    await Future.delayed(Duration(seconds: 1));
+    await Future.delayed(const Duration(seconds: 1));
     return _generateErrorOrRandomNumber();
   }
 
-  _generateErrorOrRandomNumber() {
+  int _generateErrorOrRandomNumber() {
     if (Random().nextBool()) {
       return Random().nextInt(999);
     } else {

@@ -10,15 +10,15 @@ final randomNumberViewController =
 class RandomNumberViewController extends StateNotifier<bool> {
   RandomNumberViewController(this._read) : super(false);
 
-  Reader _read;
+  final Reader _read;
 
-  getRandomNumber() async {
+  Future<void> getRandomNumber() async {
     state = true;
     await _read(randomNumberController).getRandomNumber();
     state = false;
   }
 
-  logout() async {
+  Future<void> logout() async {
     state = true;
     await _read(authController).logout();
     state = false;

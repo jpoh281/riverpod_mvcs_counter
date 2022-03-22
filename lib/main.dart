@@ -5,10 +5,12 @@ import 'package:riverpod_mvcs_counter/views/auth/auth_view.dart';
 import 'package:riverpod_mvcs_counter/views/random_number/random_number_view.dart';
 
 void main() {
-  runApp(ProviderScope(child: MyApp()));
+  runApp(const ProviderScope(child: MyApp()));
 }
 
 class MyApp extends ConsumerWidget {
+  const MyApp({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     String currentUser = ref
@@ -16,7 +18,7 @@ class MyApp extends ConsumerWidget {
         .when(data: (data) => data, error: (e, s) => "", loading: () => "");
 
     return MaterialApp(
-      home: currentUser.isNotEmpty ? RandomNumberView() : AuthView(),
+      home: currentUser.isNotEmpty ? const RandomNumberView() : const AuthView(),
     );
   }
 }

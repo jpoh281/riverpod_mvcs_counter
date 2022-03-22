@@ -5,17 +5,17 @@ final randomNumberModel =
         (ref) => RandomNumberModel());
 
 class RandomNumberModel extends StateNotifier<AsyncValue<int>> {
-  RandomNumberModel() : super(AsyncData(0));
+  RandomNumberModel() : super(const AsyncData(0));
 
-  setLoading(){
-    state = AsyncLoading();
+  void setLoading(){
+    state = const AsyncLoading();
   }
 
-  setCount(int number) {
+  void setCount(int number) {
     state = AsyncData(number);
   }
 
-  setError(Exception error){
+  void setError(Exception error){
     state = AsyncError(error);
   }
 }
