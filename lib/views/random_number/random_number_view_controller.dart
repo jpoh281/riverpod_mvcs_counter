@@ -8,7 +8,9 @@ final randomNumberViewController =
 });
 
 class RandomNumberViewController extends StateNotifier<bool> {
-  RandomNumberViewController(this._read) : super(false);
+  RandomNumberViewController(this._read) : super(false){
+    _read(randomNumberController).getRandomNumber();
+  }
 
   final Reader _read;
 

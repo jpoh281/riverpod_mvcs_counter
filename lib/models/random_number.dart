@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final randomNumberModel =
@@ -5,9 +7,9 @@ final randomNumberModel =
         (ref) => RandomNumberModel());
 
 class RandomNumberModel extends StateNotifier<AsyncValue<int>> {
-  RandomNumberModel() : super(const AsyncData(0));
+  RandomNumberModel() : super(const AsyncLoading());
 
-  void setLoading(){
+  void setLoading() {
     state = const AsyncLoading();
   }
 
@@ -15,7 +17,13 @@ class RandomNumberModel extends StateNotifier<AsyncValue<int>> {
     state = AsyncData(number);
   }
 
-  void setError(Exception error){
+  void setError(Exception error) {
     state = AsyncError(error);
+  }
+
+  @override
+  void dispose() {
+    log("dispose", name:"");
+    super.dispose();
   }
 }

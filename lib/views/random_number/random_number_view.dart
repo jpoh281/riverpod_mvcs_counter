@@ -10,22 +10,25 @@ class RandomNumberView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     bool isLoading = ref.watch(randomNumberViewController);
-    String currentUser = ref
-        .watch(user)
-        .when(data: (data) => data, error: (e, s) => "", loading: () => "");
+    var currentUser = ref.watch(user).unwrapPrevious();
     var viewController = ref.watch(randomNumberViewController.notifier);
-
     return Scaffold(
       appBar: AppBar(
         key: const ValueKey('RandomNumberView Appbar'),
-        title: Text("Hello, $currentUser"),
+        title: currentUser.when(
+          data: (userName) => Text("Hello, $userName"),
+          error: (e, s) => const Text(""),
+          loading: () => const Text(""),
+        ),
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Center(
-            child: ref.watch(randomNumberModel).when(
-                  data: (data) => Text("Random Number : $data"),
+            child: ref.watch(randomNumberModel).unwrapPrevious().when(
+                  data: (data) {
+                    return Text("Random Number : $data");
+                  },
                   error: (e, s) => Text("Error: $e"),
                   loading: () => const CircularProgressIndicator(),
                 ),

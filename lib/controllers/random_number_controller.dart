@@ -3,21 +3,22 @@ import 'package:riverpod_mvcs_counter/models/random_number.dart';
 import 'package:riverpod_mvcs_counter/services/random_number_service.dart';
 
 final randomNumberController =
-    Provider<RandomNumberController>((ref) => RandomNumberController(ref.read));
+    Provider<RandomNumberController>((ref) => RandomNumberController(ref));
 
 class RandomNumberController {
-  final Reader _read;
+  final Ref _ref;
 
-  RandomNumberController(this._read);
+  RandomNumberController(this._ref);
 
   Future<int> getRandomNumber() async {
-    _read(randomNumberModel.notifier).setLoading();
+    var model = _ref.read(randomNumberModel.notifier);
+    model.setLoading();
     try {
-      int randomNumber = await _read(numberService).getRandomNumber();
-      _read(randomNumberModel.notifier).setCount(randomNumber);
+      int randomNumber = await _ref.read(numberService).getRandomNumber();
+      model.setCount(randomNumber);
       return randomNumber;
     } catch (e) {
-      _read(randomNumberModel.notifier).setError(e as Exception);
+      model.setError(e as Exception);
       return -1;
     }
   }
